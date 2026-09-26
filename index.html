@@ -1,0 +1,81 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Home / X</title>
+<style>
+*{box-sizing:border-box}html,body{margin:0;min-height:100%;font-family:Arial,Helvetica,sans-serif;background:#fff;color:#0f1419}
+body{overflow-x:hidden}.app{min-height:100vh;display:grid;grid-template-columns:72px minmax(0,600px) 320px;max-width:1100px;margin:auto}
+nav{border-right:1px solid #eff3f4;padding:12px 10px}.x{font-size:32px;font-weight:900;text-align:center;padding:10px}.navitem{font-size:17px;padding:14px 10px;border-radius:999px;margin:3px 0}.post{border-bottom:1px solid #eff3f4;padding:18px 20px}.user{font-weight:700}.handle{color:#536471}.text{margin-top:7px;line-height:1.45}.right{padding:16px}.box{background:#f7f9f9;border-radius:18px;padding:18px}.search{background:#eff3f4;border:0;border-radius:999px;padding:14px;width:100%;font-size:15px}
+.modal{position:fixed;inset:0;background:rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;padding:20px;z-index:20}
+.card{width:min(600px,100%);background:#fff;border-radius:20px;padding:30px;box-shadow:0 8px 40px rgba(0,0,0,.3)}
+.card h1{font-size:24px;margin:0 0 18px}.card p{color:#536471;line-height:1.5}.terms{height:150px;overflow:auto;border:1px solid #cfd9de;border-radius:12px;padding:14px;font-size:13px;color:#536471;background:#fafafa}
+.buttons{display:flex;gap:12px;margin-top:22px}.buttons button{flex:1;border:0;border-radius:999px;padding:14px;font-size:16px;font-weight:700;cursor:pointer}.accept{background:#1d9bf0;color:#fff}.decline{background:#fff;color:#0f1419;border:1px solid #cfd9de!important}
+#scare{display:none;position:fixed;inset:0;background:#000;z-index:9999;align-items:center;justify-content:center;overflow:hidden}
+#scare img{width:100vw;height:100vh;object-fit:cover;object-position:center;filter:contrast(1.15) saturate(.8);animation:shake .055s infinite}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;animation:flash .22s 1}
+.credit{position:fixed;bottom:6px;right:8px;color:#777;font-size:10px;z-index:10000}
+@keyframes shake{0%{transform:scale(1.03) translate(0,0)}25%{transform:scale(1.08) translate(-7px,4px)}50%{transform:scale(1.1) translate(6px,-3px)}75%{transform:scale(1.07) translate(-4px,-5px)}100%{transform:scale(1.03) translate(3px,3px)}}
+@keyframes flash{0%{opacity:.9}100%{opacity:0}}
+@media(max-width:850px){.app{grid-template-columns:64px minmax(0,1fr)}.right{display:none}.navitem{font-size:0;text-align:center}.navitem:before{content:"•";font-size:25px}}
+</style>
+</head>
+<body>
+<div class="app">
+<nav><div class="x">𝕏</div><div class="navitem">⌂</div><div class="navitem">🔍</div><div class="navitem">🔔</div><div class="navitem">✉</div><div class="navitem">👤</div></nav>
+<main>
+<div class="post"><div><span class="user">Minecraft</span> <span class="handle">@Minecraft · 2h</span></div><div class="text">What are you playing today? 🎮</div></div>
+<div class="post"><div><span class="user">Steve</span> <span class="handle">@steve · 4h</span></div><div class="text">Just found a crazy seed. This world is actually beautiful.</div></div>
+<div class="post"><div><span class="user">Alex</span> <span class="handle">@alex · 7h</span></div><div class="text">Anyone else staying up way too late? 😭</div></div>
+<div class="post"><div><span class="user">Gaming News</span> <span class="handle">@gamingnews · 1d</span></div><div class="text">New update discussion is happening now.</div></div>
+</main>
+<aside class="right"><input class="search" placeholder="Search"><div class="box" style="margin-top:18px"><b>What's happening</b><p>Gaming · Trending</p><p>Minecraft · Trending</p><p>Something interesting · 12.4K posts</p></div></aside>
+</div>
+
+<div class="modal" id="terms">
+<div class="card">
+<h1>Before you continue</h1>
+<p>Review the Terms of Service and Privacy Policy before using X.</p>
+<div class="terms">
+<b>Terms of Service</b><br><br>
+By continuing, you agree to these terms. This is a fictional demonstration page and does not collect, store, or transmit your personal information.<br><br>
+You agree to use the service responsibly, respect other users, and acknowledge that this demonstration may contain surprise visual effects.
+</div>
+<div class="buttons">
+<button class="decline" id="decline">Decline</button>
+<button class="accept" id="accept">Accept</button>
+</div>
+</div>
+</div>
+
+<div id="scare" aria-hidden="true">
+<img src="https://upload.wikimedia.org/wikipedia/commons/2/2c/Jeff_the_Killer.jpg" alt="Jeff the Killer">
+<div class="flash"></div>
+<div class="credit">Image: LuxAmber / Wikimedia Commons, CC BY-SA 4.0</div>
+</div>
+
+<script>
+const terms=document.getElementById('terms'), scare=document.getElementById('scare');
+function makeScream(){
+  try{
+    const C=window.AudioContext||window.webkitAudioContext; if(!C)return;
+    const c=new C(), now=c.currentTime, gain=c.createGain();
+    gain.gain.setValueAtTime(0.001,now); gain.gain.exponentialRampToValueAtTime(0.32,now+0.035); gain.gain.exponentialRampToValueAtTime(0.001,now+1.7); gain.connect(c.destination);
+    const osc=c.createOscillator(); osc.type='sawtooth'; osc.frequency.setValueAtTime(2100,now); osc.frequency.exponentialRampToValueAtTime(430,now+1.1); osc.connect(gain); osc.start(now); osc.stop(now+1.75);
+    const n=c.createBufferSource(), b=c.createBuffer(1,c.sampleRate*1.5,c.sampleRate), d=b.getChannelData(0);
+    for(let i=0;i<d.length;i++)d[i]=(Math.random()*2-1)*0.55;
+    n.buffer=b; const ng=c.createGain(); ng.gain.setValueAtTime(0.001,now); ng.gain.exponentialRampToValueAtTime(0.12,now+.03); ng.gain.exponentialRampToValueAtTime(.001,now+1.5); n.connect(ng).connect(c.destination); n.start(now); n.stop(now+1.5);
+  }catch(e){}
+}
+async function trigger(){
+  localStorage.setItem('prankSeen','1');
+  try{ if(document.documentElement.requestFullscreen) await document.documentElement.requestFullscreen(); }catch(e){}
+  terms.style.display='none'; scare.style.display='flex'; scare.setAttribute('aria-hidden','false'); makeScream();
+}
+document.getElementById('accept').onclick=trigger;
+document.getElementById('decline').onclick=trigger;
+if(localStorage.getItem('prankSeen')) terms.style.display='none';
+</script>
+</body>
+</html>
